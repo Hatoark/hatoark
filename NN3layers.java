@@ -141,8 +141,7 @@ public class NN3layers {
 	private void setOutputLayer(){
 		for(int i=0; i<output_length; i++){
 			for(int j=0; j<center_length+1; j++){
-				output_layer.set(i, output_layer.get(i) + 
-								center_layer.get(j) * (double)(center_output_weight.get(j).get(i)));
+				output_layer.set(i, output_layer.get(i) + center_layer.get(j) * (double)(center_output_weight.get(j).get(i)));
 			}
 			output_layer.set(i, sigmoid(output_layer.get(i)));
 		}
@@ -151,8 +150,7 @@ public class NN3layers {
 	//出力層の誤差の値を格納
 	private void updateGosaOutput(ArrayList<Integer> teach_list){
 		for(int i=0; i<output_length; i++){
-			gosa_output.set(i, 
-							-1.0 * (teach_list.get(i) - output_layer.get(i)) * output_layer.get(i) * (1.0 - output_layer.get(i)));
+			gosa_output.set(i, -1.0 * (teach_list.get(i) - output_layer.get(i)) * output_layer.get(i) * (1.0 - output_layer.get(i)));
 		}
 	}
 	
@@ -163,8 +161,7 @@ public class NN3layers {
 		for(int i=0; i<center_length; i++){
 			for(int j=0; j<output_length; j++){
 				
-				gosa_center.set(i, 
-								gosa_center.get(i) + ((double)(center_output_weight.get(i).get(j)) * gosa_output.get(j)));
+				gosa_center.set(i, gosa_center.get(i) + ((double)(center_output_weight.get(i).get(j)) * gosa_output.get(j)));
 			}
 		}
 	}
@@ -174,9 +171,8 @@ public class NN3layers {
 		for(int i=0; i<output_length; i++){
 			for(int j=0; j<center_length+1; j++){
 				
-				center_output_weight.get(j).set(i, 
-												(double)(center_output_weight.get(j).get(i)) 
-												+ (influ_weight_coeff * gosa_output.get(i) * center_layer.get(j)));
+				center_output_weight.get(j).set(i, (double)(center_output_weight.get(j).get(i)) 
+								+ (influ_weight_coeff * gosa_output.get(i) * center_layer.get(j)));
 			}
 		}
 	}
@@ -185,9 +181,8 @@ public class NN3layers {
 	private void updateInputCenterWeight(){
 		for(int i=0; i<center_length; i++){
 			for(int j=0; j<input_length+1; j++){
-				input_center_weight.get(j).set(i, 
-												(double)(input_center_weight.get(j).get(i)) 
-												+ (influ_weight_coeff * gosa_center.get(i) * input_layer.get(j)));
+				input_center_weight.get(j).set(i, (double)(input_center_weight.get(j).get(i)) 
+								+ (influ_weight_coeff * gosa_center.get(i) * input_layer.get(j)));
 			}
 		}
 	}
